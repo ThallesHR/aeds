@@ -20,8 +20,7 @@ typedef struct no_ {
 Ela tenta encontrar um item com um número(chave) que seja igual ao que você esta procurando.Se encontrar
 ele repassa anotações de qume estava na frente do item encontrado e o própio item encontrado.
 segue abaixo o código exemplo de como pode fazer uma função para buscar o item
-void busca_enc(int x, no **ant, no **pont, no* ptlista) { //no*ant e no**pont é o item anterior 
-e o ponteiro do próximo item
+void busca_enc(int x, no **ant, no **pont, no* ptlista) { 
 
     *ant = ptlista;
     *pont = NULL;
@@ -38,4 +37,65 @@ e o ponteiro do próximo item
         }
     }
 }
+1->*ant = ptlista;
+->no*ant e no**pont é o ponteiro do item anterior
+->e o ponteiro do próximo item 
+->ptlista é o ponteiro para o ínicio da lista encadeada
+->a linha inicializa no *ant para apontar para o início da lista(antes do primeiro nó)
+->no começo da busca o nó anterior(*ant) é o inicio da lista
 
+2->*pont = NULL;
+->*pont é um ponteiro que sera usado para guardar o nó que contém a chave que estamos procurando
+->inicialmente,*pont é definido como NULL, indicando que ainda não encontramos o nó desejado.
+->*pont começa como NULL, e só será atualizado se encontrarmos um nó com a chave igual a x.
+
+3->no*ptr = (*ptlista).prox;
+->ptr é um ponteiro que será usado para percorrer a lista.
+->(*ptlista).prox é o ponteiro para o primeiro nó real da lista(o próximo após o ínicio da lista 
+e o primeiro nó real esta em ptlista->prox).
+->ptr é inicíalizado para apontar para o primeiro nó real da lista(pois ptlista é o inicio da lista,
+e o primeiro nó real esa em ptlista->prox).
+
+4->while(ptr != NULL);
+->Este é o inicío de um laço que vai percorrer a lista enquanto ptr não for NULL(ou seja, enquanto houver nós
+a serem examinados).
+-> O loop vai continuar até chegar ao final da lista, onde ptr será NULL.
+
+5->if((*ptr).chave < x)
+-> Aqui verifica se a chave de nó atual(*ptr) é menor que x.
+->Se a chave do nó atual for menor que a chave que estamos procurando,significa que o nó desejado(se existir)
+deve vur depois deste nó.
+
+6->*ant=ptr;
+->Atualiza o ponteiro *ant para apontar para o nó atula(ptr), que é o nó anterior ao próximo da lista.
+->A cada iteração onde a chave de nó atual é menor que x, atualizamos *ant para o nó atual. Isso prepara *ant 
+para apontar para o nó anterior quando encontrarmos o nó desejado ou chegarmos ao fim da lista
+
+7->ptr = (*ptr).prox;
+->Move o ponteiro ptr para o próximo nó da lista.
+->Continuamos a busca movendo para o próximo nó da lista.
+
+8->else
+->Esta parte do código é executada quando a chave do nó atual não é menor que X o que significa que a chave
+do nó atual é maior ou igual a X.
+->Se chegarmos aqui estamos perto ou ja encontramos o nó desejado.
+
+9->if((*ptr).chave == x)
+->Verifica se a chave do nó atual é exatamente igual a X.
+->Se a chave do nó atual for igual a X,encontramos o nó desejado.
+
+10->*pont = ptr;
+->Atualiza *pont para apontar para o nó que contém a chave X.
+->Se encontramos o nó com a chave igual a X,*pont é atualizado para esse nó.
+
+11->ptr = NULL;
+->Define ptr como NULL para sair do loop.
+Terminamos a busca porque encontramos o nó desejado ou porque chegamos a um nó onde a chave não pode 
+menor que X e,portanto não há mais o que procurar.
+
+Resumo
+Inicialmente, *ant é definido como o inicio da lista e *pont como NULL.
+Depois,ptr começa a percorrer a lista a partir do primeiro nó real
+Durante a busca, se a chave do nó atual é menor que x,*ant é atualizado e ptr avança.
+Se a chave do nó atual é igual a x, *ant é atualizado e ptr é definido como NULL para terminar a busca.
+O loop termina quando ptr se torna NULL,indicando que todos os nós foram examinados.
