@@ -1,0 +1,41 @@
+Vamos imaginar que vc tem uma caixa de itens a guardar e que esses itens estaõ enfileirados
+cada item tem seu numero(chave),e sua descrição(valor);
+
+1-Definição dos Itens(struct):
+
+-Suponha que cada item é representado com um cartão que informa sobre ele, o cartão tem 3 partes:
+->um número(chave) que identifica o item
+->uma descrição(valor)para saber qual item é
+-> um ponteiro indicando onde está o próximo item na fila
+segue abaixo um exemplo de como o código pode ser organizado para que ocorra a definição dos itens
+
+typedef struct no_ {
+    int chave;
+    int valor;
+    struct no_ *prox;
+} no;
+----------------------------------------------------------------------------------------
+2-Procurando o item(Função busca_enc):
+-Essa função é como se fosse uma pessoa procurando por um item específico na fila
+Ela tenta encontrar um item com um número(chave) que seja igual ao que você esta procurando.Se encontrar
+ele repassa anotações de qume estava na frente do item encontrado e o própio item encontrado.
+segue abaixo o código exemplo de como pode fazer uma função para buscar o item
+void busca_enc(int x, no **ant, no **pont, no* ptlista) { //no*ant e no**pont é o item anterior 
+e o ponteiro do próximo item
+
+    *ant = ptlista;
+    *pont = NULL;
+    no *ptr = (*ptlista).prox;
+    while (ptr != NULL) {
+        if ((*ptr).chave < x) {
+            *ant = ptr;
+            ptr = (*ptr).prox;
+        } else {
+            if ((*ptr).chave == x) {
+                *pont = ptr;
+            }
+            ptr = NULL;
+        }
+    }
+}
+
