@@ -1,0 +1,73 @@
+Adicionando um Brinquedo (Função insere_enc):
+
+Esta função é como se fosse um organizador que coloca um novo brinquedo na linha no lugar certo. Ela usa o detetive (a função busca_enc) para encontrar onde o brinquedo deve ir. Se o lugar está vazio (ou seja, o brinquedo já está na linha), ela coloca o brinquedo lá. Se o brinquedo já estiver na linha, ela diz que não é possível adicionar o brinquedo.
+
+int insere_enc(no *no_inserir, no* ptlista) {
+    no *ant;
+    no *pont;
+    busca_enc((*no_inserir).chave, &ant, &pont, ptlista);
+    if (pont == NULL) {
+        (*no_inserir).prox = (*ant).prox;
+        (*ant).prox = no_inserir;
+        return 0;
+    }
+    return -1;
+}
+
+
+Removendo um Brinquedo (Função remove_enc):
+
+Esta função é como se fosse um limpador que remove um brinquedo da linha. Novamente, o detetive (a função busca_enc) procura o brinquedo. Se encontrar, ele o remove da linha e o devolve para você. Se não encontrar o brinquedo, ele diz que não conseguiu encontrar.
+
+
+no *remove_enc(int x, no* ptlista) {
+    no *ant;
+    no *pont;
+    busca_enc(x, &ant, &pont, ptlista);
+    if (pont != NULL) {
+        (*ant).prox = (*pont).prox;
+        return pont;
+    }
+    return NULL;
+}
+
+Colocando Tudo Junto (Função main):
+
+Aqui, você começa criando uma linha de brinquedos vazia. Depois, adiciona um brinquedo com o número 1 e a descrição 1. Então, tenta remover dois brinquedos: um com o número 2 (que não está na linha) e outro com o número 1 (que está na linha). Ele mostra mensagens sobre o que aconteceu com cada tentativa.
+
+
+int main() {
+    no *ptlista;
+    ptlista = malloc(sizeof(no));
+    (*ptlista).prox = NULL;
+
+    no *inserir = malloc(sizeof(no));
+    (*inserir).chave = 1;
+    (*inserir).valor = 1;
+    (*inserir).prox = NULL;
+
+    if (insere_enc(inserir, ptlista) == -1) {
+        printf("erro ao inserir\n");
+    } else {
+        printf("insercao realizada\n");
+    }
+
+    no *removido = remove_enc(2, ptlista);
+    if (removido == NULL) {
+        printf("elemento nao encontrado\n");
+    } else {
+        printf("chave: %d | valor: %d\n", (*removido).chave, (*removido).valor);
+    }
+
+    removido = remove_enc(1, ptlista);
+    if (removido == NULL) {
+        printf("elemento nao encontrado\n");
+    } else {
+        printf("chave: %d | valor: %d\n", (*removido).chave, (*removido).valor);
+    }
+    return 0;
+}
+
+
+
+
