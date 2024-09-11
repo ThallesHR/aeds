@@ -102,3 +102,32 @@ O loop termina quando ptr se torna NULL,indicando que todos os nós foram examin
 
 
 3-ADICIONANDO UM ITEM(Função Insere enc):
+->essa função é como um organizador que coloca um novo item na linha no lugar certo.
+ela usa a pessoa procurando(função busca_enc) para encontrar onde o item deve ir.Se o lugar está vazio
+(ou seja o item esta na linha),ela coloca o item lá. se o item ja estiver na linha, ela diz que não é possivel 
+adicionar o item.
+
+int insere_enc(no *no_inserir, no* ptlista) {
+    no *ant;
+    no *pont;
+    busca_enc((*no_inserir).chave, &ant, &pont, ptlista);
+    if (pont == NULL) {
+        (*no_inserir).prox = (*ant).prox;
+        (*ant).prox = no_inserir;
+        return 0;
+    }
+    return -1;
+}
+
+1->int insere_enc(no *no_inserir).chave,&ant,&pont,ptlista);
+->define a função insere_enc que retorna um valor inteiro(int).a função recebe dois parâmetros
+->no *no_inserir um ponteiro para o nó que será inserido na lista.
+->no* ptlista um ponteiro para o inicio da lista encadeada.
+
+2->no *ant;no*pont;
+-> Declara dois ponteiros para nós.ant será usado para armazenar o ponteiro para o nó anterior ao ponto de
+inserção e pont sera usado para armazenar o ponteiro para o nó atual na lista onde a inserção será feita.
+
+3->busca_enc((*no_inserir).chave, &ant ,&pont, ptlista);
+->chama a funç
+
