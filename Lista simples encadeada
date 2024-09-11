@@ -129,5 +129,31 @@ int insere_enc(no *no_inserir, no* ptlista) {
 inserção e pont sera usado para armazenar o ponteiro para o nó atual na lista onde a inserção será feita.
 
 3->busca_enc((*no_inserir).chave, &ant ,&pont, ptlista);
-->chama a funç
+->chama a função busca_enc que realiza uma busca na lista. Ela utiliza
+a chave do nó a ser inserido(no_inserir -> chave) e atualiza os ponteiros
+ant e pont.
+->ant será atualizado com o nó anterior ao ponto de inserção
+->pont será o nó onde a busca encontrou um espaço ou a posição correta.
 
+4-> if(pont == NULL)
+-> verifica se pont é NULL, o que indica que a posição correta
+foi encontrada e não há um nó com a mesma chave na lista.
+
+5->(*no_inserir).prox = (*ant).prox
+->Atualiza o ponteiro prox do nó a ser inserido para apontar para o nó
+que estava imediatamente após ant.Isso insere no_inserir na posição 
+correta da lista.
+
+6->(*ant).prox = no_inserir;
+->Atualiza o ponteiro prox do nó anterior(ant) para apontar para o nó
+que está inserido(no_inserir),completando a inserção.
+
+7-return -1;
+-> se a condição if(pont == NULL) não foi atendida, significa que ja 
+existe um nó com a mesma chave ou não é possivel realizar a inserção 
+então retorna -1;
+
+Resumindo ->
+-> A função tenta inserir um novo nó na lista encadeada
+-> se a posição correta for encontrada insere o nó e retorna 0
+-> se não,retorna -1 indicando que a inserção falhou
