@@ -1,0 +1,120 @@
+Lista linear
+
+-> Estrutura de dados na qual cada elemento é precedido por um elemento 
+e sucedido por outro(exceto o primeiro que não tem predecessor e o último 
+que não tem sucessor.)
+Os elementos estão em uma dada ordem(por exemplo, a ordem de inclusão ou
+ordenados por uma chave).
+
+-> É uma lista linear na qual a ordem lógica dos elementos( a ordem "vista"
+pelo usuário) é a mesma ordem fisica(em memória principal) dos elementos.
+Isto é, elementos vizinhos na lista estarão em posições vizinhas de memória.
+
+Segue abaixo o código em C para a implementação da lista:
+
+typedef int TIPOCHAVE; //definição de chave(número) que vai estar na lista
+
+typedef struct{
+TIPOCHAVE chave; // chamando a definição escrita acima como definir o número na lista
+}
+REGISTRO; // definição do nome da struct
+
+typedef struct{
+REGISTRO A [MAX]; // tamanho pre definido MAX pode ser X elementos
+int nroElem;//definir um int onde fica o número do elemento
+} LISTA // definição do nome da struct
+
+
+FUNÇÕES DE GERENCIMANETO:
+Implementaremos funções para:
+-> inicializar estrutura
+-> retornar quantidade de elementos válidos
+-> Exibir os elementos da estrutura
+->Inserir elementos na estrutura
+->Excluir elementos na estrutura
+->Reinicializar a estrutura
+
+Inicialização->Para inicializar uma estrutra qualquer, precisamos pensar
+nos valores adequados para cada um dos campos de nossa estrutura.
+Para inicializar uma lista sequencial já criada pelo usuário, só precisamos
+colocar o valor 0 no número de elementos válidos
+
+void InicializarLista(Lista 1*){// inicia a função e o * aponta para o endereço
+1->nroElem = 0;// modificação feita para adicionar o 0 como 1 elemento
+
+Retornar Numero de elementos
+Para esta estrutura basta retornar o valor do campo nroElem
+int tamanho(lista*1){// chamando ponteiro da lista
+return 1->nroElem;// retornando o valor da nroElem
+}
+
+Exibir elementos
+Para exibir os elementos da estrutura precisaos passar pelos elementos 
+válidos e por exemplo imprimir suas chaves(número).
+
+void exibirlista(Lista*1){//recebendo o ponteiro da lista
+int i;
+printf("lista":"");
+for (i=0; i<1->nroElem; i++)//for para percorrer a lista e achar elementos válidos
+printf("%i",1->A[i].chave);//printar o inteiro 
+
+Buscar por elemento
+A função de busca deverá:
+Receber uma chave do usuário
+Retornar a posição em que este elemento se encontra na lista
+(caso seja encontrado)
+Retornar -1 caso não haja um registro com essa chave na lista
+
+int buscaSequencial(lista*1,TIPOCHAVE ch){//recebendo o ponteiro e a definição da chave
+int i = 0;
+while(i<1->nroElem){ // percorrer a lista com a variavel i e adicionando +1 até achar
+if(ch == 1->A[i].chave) return i;// comparar a chave de busca com a chave atual
+else i++;
+}
+return -1;
+
+Inserção de um elemento
+O usuário passa como parâmetro um registro a ser inserido na lista
+Há diferentes possibilidades de inserção:
+No início
+No fim
+Ordenada pela chave
+Numa posição indicada pelo usuário
+
+Como inserir?
+Se a lista não estiver cheia e o indice passado pelo usuário for válido:
+desloca todos os elementos posteriores uma posição a direita;
+insere o elemento na posição desejada, soma um ao campo nroElem e retorna
+true
+Caso contrário retorna false
+
+bool InserirElemento(lista*1, REGISTRO reg, int i){//endereço da lista,registro que vai ser inserido
+int j;
+if((1->nroElem == Max) || (i<0) || (i>1->nroElem))//se o i for menor que 0 e maior que o numero de elementos ele é invalido e se a estrutura estiver cheia
+return false;
+for(j= 1->nroElem; j>i j--) 1->A[J] = 1->A[j] = 1->A[j-1];//j desloca do ultimo elemento pra tras copia o elemento e joga pra posição valida
+1->A[i] = reg;//copia o reg na posição i 
+1->nroElem+;//joga ele pro nova posição
+return true;
+
+Exclusão de um elemento
+O usuário passa a chave do elemento que ele quer excluir
+Se houver um elemento com esta chave na lista, "exclui este elemento"
+desloca todos os elementos posteriores uma posição para a esquerda 
+diminui em um o campo nroElem e 
+retorna true
+caso contrário retorna false
+
+bool excluiritemlista(TIPOCHAVE ch,lista*1){//a chave(número que sera excluido e o endereço da lista
+int pos, j;
+pos = buscaSequencial(1,ch);//pos recebe a função de busca para achar o elemento atraves da chave
+if (pos == -1) return false;//se o pos não encontrar um numero valido retorna false
+for(j = pos; j<1->nroELem-1; j++)// para j com o valor de pos j vai receber o nro elem -1 deslocando para a tras
+1->A[j] = 1->A[j+1];
+1->nroElem--;//diminui um no total de elementos
+
+Reinicialização da lista
+Para esta estrutura para reinicializar a lista basta colocar 0 no campo nroElem
+
+void reiniciarlista(lista*1){//endereço da lista
+1->nroElem = 0 //defini o numero de elementos para 0 reiniciando a lista
