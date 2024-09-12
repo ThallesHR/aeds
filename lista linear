@@ -107,7 +107,7 @@ caso contrário retorna false
 
 bool excluiritemlista(TIPOCHAVE ch,lista*1){//a chave(número que sera excluido e o endereço da lista
 int pos, j;
-pos = buscaSequencial(1,ch);//pos recebe a função de busca para achar o elemento atraves da chave
+pos = buscaBinaria(1,ch);//pos recebe a função de busca para achar o elemento atraves da chave
 if (pos == -1) return false;//se o pos não encontrar um numero valido retorna false
 for(j = pos; j<1->nroELem-1; j++)// para j com o valor de pos j vai receber o nro elem -1 deslocando para a tras
 1->A[j] = 1->A[j+1];
@@ -171,3 +171,6 @@ if(1->A[meio].chave == ch) return meio;//comparar se a chave é igual ao ponto q
 else{
 if(1->A[meio].chave<ch) ant = meio+1;// se a chave for menor ele vai andar pro lado do ant
 else prox = meio -1;//se não ele olha pro lado do prox
+
+- A busca fica mais eficiente
+-Não utiliza mais o secreto
