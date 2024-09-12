@@ -20,7 +20,7 @@ TIPOCHAVE chave; // chamando a definição escrita acima como definir o número 
 REGISTRO; // definição do nome da struct
 
 typedef struct{
-REGISTRO A [MAX]; // tamanho pre definido MAX pode ser X elementos
+REGISTRO A [MAX+1]; // tamanho pre definido MAX pode ser X elementos(+1 para o elemento secreto incrementado na busca)
 int nroElem;//definir um int onde fica o número do elemento
 } LISTA // definição do nome da struct
 
@@ -118,3 +118,56 @@ Para esta estrutura para reinicializar a lista basta colocar 0 no campo nroElem
 
 void reiniciarlista(lista*1){//endereço da lista
 1->nroElem = 0 //defini o numero de elementos para 0 reiniciando a lista
+
+
+Agora abordaremos dois aspectos:
+-Otimização de busca por elementos;
+-Mudança na ordem de inserção dos elementos
+
+
+Busca por elementos
+O usuáio diz qual elemento é buscado e a função retorna a posição do
+elemento:
+-As chaves dos elementos não estão em ordem crescente;
+-Se o elemento não existir a função retorna -1;
+-Precisamos sempre comparar a chave do elemento atual com a chave do 
+elemento buscado;
+Criação de um elemento sentinela:
+-Elemento extra(um registro) adicionado a lista para auxiliar operações;
+-Sera inserido no final da lista(apos o ultimo elemento valido)nas buscas
+-Conterá a chave do elemento buscado.
+
+int buscaElemento(lista *1,TIPOCHAVE  ch){//endereço da lista,chave buscada
+int i = 0;
+1->A[1->nroElem].chave = ch;//inserindo o elemento secreto para a busca
+while(1->A[i].chave !=ch)i++;//enquanto a chave atual for diferente da chave buscada
+if(i == 1->nroElem) return -1;// se o meu i estiver na posição nroElem retorna -1 e não encontra
+!!CRIE UMA POSIÇÃO EXTRA SEMPRE PARA O ELEMENTO SECRETO
+
+Inserção Ordenada
+-As chaves precisam estar ordenadas para ocorrer busca binária;
+-Com isso há mudança na inserção de elementos.
+-A função de inserção segue a lógica do insertion sort.
+
+bool InserirElemOrd(lista*1,REGISTRO reg){//endereço da lista e os registros a ser inserido
+if(1->nroElem >= MAX) return false;// se o numero de elementos for maior que o max retorna false
+int pos = 1->nroElem//recebe o ultimo elemento
+while(pos > 0 && 1->A[pos-1].chave>reg.chave){//Enquanto a posição do elemento for maior que zero compara a chave atual com a chave da busca
+se ela for maior entra no while
+1->A[pos] = 1->A[pos -1];//desloca uma posição
+pos--;
+}
+1->A[pos] = reg; // insere o elemento na posição
+1->nroElem++//adiciona 1 ao numero de elementos
+
+Busca Binaria
+int buscaBinaria(lista*1,TIPOCHAVE ch)//endereço da lista e o numero da chave que vc quer buscar
+int ant,prox,meio;
+ant = 0;//1 posição valida
+prox=1->nroELem-1; // ultima posição valida
+while(ant <= prox){ //enquanto houver elementos a ser observado ele executa o while
+meio = ((ant+prox)/2);// calculo o meio;
+if(1->A[meio].chave == ch) return meio;//comparar se a chave é igual ao ponto que está e se for retornar o valor
+else{
+if(1->A[meio].chave<ch) ant = meio+1;// se a chave for menor ele vai andar pro lado do ant
+else prox = meio -1;//se não ele olha pro lado do prox
