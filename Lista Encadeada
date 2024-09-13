@@ -1,0 +1,164 @@
+Lista encadeada
+Para evitar o deslocamento de elementos durante a inserção e a exclusão
+utilizaremos uma lista ligada
+-é uma estrutura linear(possui um predecessor e um sucessor)
+-A ordem lógica dos elemntos(ordem vista pelo usuário)
+não é a mesma ordem física(em memória)
+-Cada elemento precisa indicar quem é o seu sucessor.
+
+Implementação estática
+Chamaremos de lista encadeada implementação estática, porque nossos 
+registros serão armazenados em um arranjo criado inicialmente.
+
+Adicionalmente,cada elemento da nossa lista terá um campo para indicar a posição
+do seu sucessor
+
+CUIDADOS!!
+-Precisamos saber onde esta o 1 elemento
+-Precisamos saber quais são os elementos disponiveis.
+
+typedef int TIPOCHAVE;//definição padrão para chamar a chave 
+
+typedef struct{
+TIPOCHAVE chave;//definindo chave para a função
+}REGISTRO;//arranjo
+
+typedef struct{
+REGISTRO reg;//registros que estao no arranjo
+int prox;//proximo elemento
+}ELEMENTO;//arranjo
+
+typedef struct{
+ELEMENTO A[MAX];//elementos 
+int inicio;//1 elemento
+int dispo;//1 elemento disponivel
+}LISTA;
+
+Inicialização
+Para inicializarmos nossa lista ligada,precisamos:
+-Colocar todos os elementos na "lista" de disponíveis;
+-Acertar a variável dispo(primeiro item disponível);
+-Acertar a váriavel inicio(para indicar que não há nenhum item válido);
+
+void inicializarLista(LISTA*1){
+int i;
+for(i = 0; i<MAX-1; i++)// para 0 ate o max vai disponibilizar a proxima posiçãop
+1->A[i].prox = i+1;
+1->A[MAX-1].prox = -1;//defini que o ultimo elemento da lista não há sucessor
+1->dispo = 0; // primeira posição valida esta vazia
+
+Retornar Número de Elementos
+Ja que não foi criado um campo com numero de elementos
+precisamos percorrer todos os elementos validos para contar quantos são.
+
+int tamanho(lista*1){
+int i = 1->inicio;//1 item da lista
+int tam =0;// conta quantos elementos
+while(i!= -1){//enquanto i for diferente de -1 conta mais um a tam
+tam++;
+i = 1=>A[i].prox //i recebe a posição atual e vai pro proximo
+}
+return tam;//retorna o tamanho
+
+Exibição
+Para exibir os elementos da estrutura precisamos iterar pelos elementos válidos
+e,por exemplo imprimir suas chaves.
+
+void exibirlista(lista*1){//endereço da lista
+int i =1-> inicio//1 item da lista
+printf("lista:"");
+while(i != -1){// enquanto i for diferente de -1 ou seja existe item
+printf("%i"",1->A[i].reg.chave);//print o elemento onde esta i
+i = 1->A[i].prox;//proximo elemento
+
+Busca por Elemento 
+a função busca deverá
+Receber uma chave do usuário
+Retornar a posição em que este elemento se encontra no arranjo
+Retornar -1 caso não haja um registro com essa chave na lista
+
+int buscaSequencial(lista*1,TIPOCHAVE ch){
+int i = 1->inicio;/1 item da lista
+while(i!= -1 && 1->A[i].reg.chave <ch )//enquanto i for diferente de -1 e a posição de i for menor que ch
+i =1->A[i].prox;//i vai para o proximo elemento
+if(i!=-1 && 1->A[i].reg.chave == ch)// se i for diferente de -1 e i for igual a posição de ch
+return i;// retorna i
+else return -1//retorna não achado
+
+
+Inserção de elemento
+o usuario passa como parametro um registro a ser inserido 
+realizaremos a inserção ordenada pelo valor da chave do registro
+passado e não permite a inserção de elementos repetidos;
+na inserção precisamos identificar entre quais elementos o nosso sera inserido
+
+Inserção ordenada
+iniciaremos por uma função auxiliar que retira o primeiro elemento da lista
+de disponiveis e retorna sua posição no arranjo.
+
+int obterno(lista*1){//endereço da lista
+int resultado = 1->dispo;//1 elemento disponivel
+if(1->dispo !=-1)//se disponivel diferente de -1 ou seja tem lugar
+1->dispo =1->A[1->dispo].prox//puxa o proximo disponivel
+return resultado;//retorna o disponivel
+
+bool InserirElemListOrd(lista*1,REGISTRO reg){//endereço da lista e do registro a ser inserido
+if(1->dispo == -1) return false;//se dispo = -1 ent não ha espaço
+int ant = -1;//anterior recebe -1
+int i =1->inicio;//1 elemento
+TIPOCHAVE ch =reg.chave;//chave do registro
+while((i != -1)&&(1->A[i].reg.chave<ch) enquanto i for diferente de -1 e a posição ir ser menor que a chave
+ant = i;//anterior recebe i
+i = 1->A[i].prox;//i vai pro proximo
+if(i!= -1 && 1->A[i].reg.chave == ch) return false;// se o i for diferente de -1 e a posição igual a chave retorna false
+}
+}
+i = obterno(1);//obtem o primeiro da lista disponivel
+1->A[i].reg = reg //insere o registro na lista
+if( ant  == -1)//se anterior for igual a -1 ou seja caso nao ha anterior
+1->A[i].prox = 1->inicio;//i vai pro proximo que recebe a posição de 1 elemento
+1->inicio = 1//i recebe a posição de 1 elemento
+}
+else {
+1->A[i].prox = 1->A[ant].prox;//i prox recebe o valor de ant e joga pro pox
+1->A[ant].prox = i;//A ant aponta pra i
+return true;
+
+Exclusão do elemento
+O usuario passa a chave do elemento que quer excluir
+Se houver elemento com chave na lista,
+exclui o elemento da lista de eleemntos validos 
+e insere na lista de diponiveis
+adicionalmente acerta os ponteiros envolvidos e retorna true
+caso contrario return false
+
+bool excluirElemLista(lista*1.TIPOCHAVE ch){
+int ant = -1;// não ha anterior
+int i = 1->inicio//1 item da lista
+while((i!=-1)&&(1->A[i].reg.chave<ch))// enquanto i for diferente de -1 e a posição de i for menor que ch
+ant = i;//anterior recebe i
+i = 1->A[i].prox//i avança um
+}
+
+if (i == -1 ||1->A[i].reg.chave!=ch) return false;// se i for = -1 ou a posição da chave diferente de ch return false
+if(ant == -1)1->inicio = 1->A[i].prox//se não houver anterior i recebe o 1 item da lista e i vai pro proximo
+else 1->A[ant].prox = 1->A[i]prox// se apontar ele e excluido e aponta pro anterior
+devolverno(1,i)//retorna pra lista disponivel
+return true
+
+Função auxiliar
+Devolver elemento para a lista disponivel no inicio da lista
+
+void devolverno(lista*1,int j) {
+1->A[j].prox = 1->dispo;//ele retorna o prox para disponivel
+1->dispo = j;// se tornar o prox disponivel
+
+Reiniciar lista
+void reiniciar(lista*1){
+inicializarLista(1);//inicia a lista
+
+
+
+
+
+
