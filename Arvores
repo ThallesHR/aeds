@@ -10,11 +10,42 @@ Node*right//ponteiro apontando para direita
 Node;
 -----------------
 Node*insert(Node*root,int data){//Recebe o ponteiro da raiz e o valor a inserir
-Node*temp = (Node*) malloc(sizeof(Node));//insancia de node temporaria
+Node*temp = (Node*) malloc(sizeof(Node));//instancia de node temporaria
 temp->data = data;//o valor do campo data sendo recebido pelo temp
 temp->left = NULL;//inicializar
 temp->right = NUll;//inicializar
-
+if(root = NULL){//se root for vazio
+root = temp //root recebe o valor da temp
+}
+else{
+Node*current = root;//aponta pro node do root
+Node*parent = NULL;//ponteiro pai
+while(1){
+parent = current;// variavel pai recebe o proximo numero
+if(data<parent->data){//se o numero atual for menor que o pai
+current = current->left;//aponta pra esquerda do node atual
+if(current = NULL){
+parent->left = temp;//ponteiro a esquerda do pai aponta pro temp
+return root;// sai do loop
+}
+}
+else{
+current = current->right;//aponta pra direita do node atual
+if(current = NULL){//se for nulo 
+parent->right = temp;//ponteiro a direita do pai aponta pro temp
+return root; //sair do loop
+}
+}
+}
+}
+return root;//retorna o valor ja inserido
+}
+------------------
+void inorder(struct Node* root){
+if(root){//se node nao for nulo
+inorder(root->left);//chama ela mesma a esquerda
+prinft("%d",root->data);//vai printar o ultimo 0
+inorder(root->right);//chama ela mesma a direita
 ------------------
 int main(){
 int i;
@@ -28,6 +59,8 @@ root = insert(root,array[i]);//uma função chamada insert com os parametros
 1-endereço da raiz que começa nulo e ela devolve o endereço da raiz quando popular
 2-array na posição da lista
 printf("inserido:%d\n",array[i]);
+printf("inorder");
+inorder(root);
 }
 
 int temp = search(root,88)//função de busca cujo recebe os parametros de endereço da raiz
