@@ -1,0 +1,37 @@
+Arvores --
+Para a criação da arvore tem como base a struct cujo vai dar a base do node
+inicial e com isso expandindo para direita e esquerda(segue código abaixo):
+----------------
+typedef struct Node{// arvore
+int data;//campo que vou guardar
+Node*left;//ponteiro apontando para esquerda
+Node*right//ponteiro apontando para direita
+}
+Node;
+-----------------
+Node*insert(Node*root,int data){//Recebe o ponteiro da raiz e o valor a inserir
+Node*temp = (Node*) malloc(sizeof(Node));//insancia de node temporaria
+temp->data = data;//o valor do campo data sendo recebido pelo temp
+temp->left = NULL;//inicializar
+temp->right = NUll;//inicializar
+
+------------------
+int main(){
+int i;
+int array[14] =
+{34,84,15,0,2,99,79,9,88,89,18,31,39,100,101};
+Node*root = NULL;//!!esta definido somente Node pois foi criado como typedef struct
+ou seja criado como novo tipo,node é a mesma coisa que struct node
+
+for(i = 0; i<13; i++){//um loop para inserir todos numeros
+root = insert(root,array[i]);//uma função chamada insert com os parametros
+1-endereço da raiz que começa nulo e ela devolve o endereço da raiz quando popular
+2-array na posição da lista
+printf("inserido:%d\n",array[i]);
+}
+
+int temp = search(root,88)//função de busca cujo recebe os parametros de endereço da raiz
+e numero cujo eu busco 
+
+
+
