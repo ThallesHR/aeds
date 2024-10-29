@@ -4,63 +4,64 @@ inicial e com isso expandindo para direita e esquerda(segue código abaixo):
 ----------------
 typedef struct Node{// arvore
 int data;//campo que vou guardar
-Node*left;//ponteiro apontando para esquerda
-Node*right//ponteiro apontando para direita
+struct Node*left;//ponteiro apontando para esquerda
+struct Node*right//ponteiro apontando para direita
 }
 Node;
 -----------------
-Node*insert(Node*root,int data){//Recebe o ponteiro da raiz e o valor a inserir
+Node*insert(Node*raiz,int data){//Recebe o ponteiro da raiz e o valor a inserir
 Node*temp = (Node*) malloc(sizeof(Node));//instancia de node temporaria
 temp->data = data;//o valor do campo data sendo recebido pelo temp
 temp->left = NULL;//inicializar
 temp->right = NUll;//inicializar
-if(root = NULL){//se root for vazio
-root = temp //root recebe o valor da temp
+if(raiz== NULL){//se root for vazio
+raiz = temp //root recebe o valor da temp
 }
 else{
-Node*current = root;//aponta pro node do root
-Node*parent = NULL;//ponteiro pai
+Node*atual = root;//aponta pro node do root
+Node*pai = NULL;//ponteiro pai
 while(1){
-parent = current;// variavel pai recebe o proximo numero
-if(data<parent->data){//se o numero atual for menor que o pai
-current = current->left;//aponta pra esquerda do node atual
-if(current = NULL){
-parent->left = temp;//ponteiro a esquerda do pai aponta pro temp
-return root;// sai do loop
+pai = atual;// variavel pai recebe o proximo numero
+if(data<pai->data){//se o numero atual for menor que o pai
+atual = atual->left;//aponta pra esquerda do node atual
+if(atual == NULL){
+pai->left = temp;//ponteiro a esquerda do pai aponta pro temp
+return raiz;// sai do loop
 }
 }
 else{
-current = current->right;//aponta pra direita do node atual
-if(current = NULL){//se for nulo 
-parent->right = temp;//ponteiro a direita do pai aponta pro temp
-return root; //sair do loop
+atual = atual->right;//aponta pra direita do node atual
+if(atual == NULL){//se for nulo 
+pai->right = temp;//ponteiro a direita do pai aponta pro temp
+return raiz; //sair do loop
 }
 }
 }
 }
-return root;//retorna o valor ja inserido
+return raiz;//retorna o valor ja inserido
 }
 ------------------
-void inorder(struct Node* root){
-if(root){//se node nao for nulo
-inorder(root->left);//chama ela mesma a esquerda
-prinft("%d",root->data);//vai printar o ultimo 0
-inorder(root->right);//chama ela mesma a direita
+void inorder(struct Node* raiz){
+if(raiz){//se node nao for nulo
+inorder(raiz->left);//chama ela mesma a esquerda
+prinft("%d\n",raiz->data);//vai printar o ultimo 0
+inorder(raiz->right);//chama ela mesma a direita
 ------------------
 int main(){
 int i;
-int array[14] =
-{34,84,15,0,2,99,79,9,88,89,18,31,39,100,101};
-Node*root = NULL;//!!esta definido somente Node pois foi criado como typedef struct
+int array[x] =
+{x numeros};
+Node*raiz = NULL;//!!esta definido somente Node pois foi criado como typedef struct
 ou seja criado como novo tipo,node é a mesma coisa que struct node
 
-for(i = 0; i<13; i++){//um loop para inserir todos numeros
-root = insert(root,array[i]);//uma função chamada insert com os parametros
+for(i = 0; i<x  ; i++){//um loop para inserir todos numeros
+raiz = insert(raiz,array[i]);//uma função chamada insert com os parametros
 1-endereço da raiz que começa nulo e ela devolve o endereço da raiz quando popular
 2-array na posição da lista
 printf("inserido:%d\n",array[i]);
-printf("inorder");
+printf("inorder:\n");
 inorder(root);
+return 0;
 }
 
 int temp = search(root,88)//função de busca cujo recebe os parametros de endereço da raiz
