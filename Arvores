@@ -47,6 +47,17 @@ inorder(raiz->left);//chama ela mesma a esquerda
 prinft("%d\n",raiz->data);//vai printar o ultimo 0
 inorder(raiz->right);//chama ela mesma a direita
 ------------------
+Node*search(Node *raiz, int data)  função que recebe ponteiro da raiz e o valor
+Node*atual = raiz;// cria se uma variavel "atual" apontando novamente pra raiz
+printf("Visitando elementos:");
+while (atual){//cria se um loop que quebra  caso o node atual seja nulo
+printf("%d",atual->data);//imprime o numero que esta no atual
+if(data <atual ->data){//data é menor que atual ent atual recebe data
+atual = atual->left;//atual desce e procura a esquerda
+} else if (data> atual->data){// atual é maior que data faz atual ser data
+atual = atual ->right;// atual desce e procura a direita
+}
+else {return atual;}
 int main(){
 int i;
 int array[x] =
