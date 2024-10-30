@@ -58,6 +58,7 @@ atual = atual->left;//atual desce e procura a esquerda
 atual = atual ->right;// atual desce e procura a direita
 }
 else {return atual;}
+------------------------------------
 int main(){
 int i;
 int array[x] =
