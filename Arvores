@@ -80,4 +80,35 @@ int temp = search(root,88)//função de busca cujo recebe os parametros de ender
 e numero cujo eu busco 
 
 
+-------------------------------------------------------------------------------------------
+Busca binaria iterativa
+
+#include<stdio.h>
+int busca_binaria(int v[],int n,int elemento);//inicia função
+int busca_binaria(int v[],int n,int elemento){// função com parametros vetor,numero de elementos,elemento desejado
+	int inicio = 0;//inicio da busca vetor 0
+	int fim = n-1;//fim da busca ultimo elemento -1
+	int meio;// meio do vetor
+	
+	while(inicio <= fim){ // enquanto fim for maior ou igual inicio
+		meio = (inicio+fim)/2;// meio recebe inicio + fim /2 para achar o meio do vetor
+		if(elemento == v[meio]){ // se o elemento for  == ao vetor na posição do meio
+		
+		printf("Elemento encontrado na posicao %d\n",meio);//elemento encontrado e em que posição ele esta do vetor
+		return elemento;//retorna elemento
+		}else if(elemento < v[meio])//se não elemento for menor que meio 
+		fim = meio -1;// fim recebe -1,levando a busca a estar mais perto do inicio
+		else //se não
+		inicio = meio+1;// inicio recebe +1,levando a busca a estar mais perto do fim
+	}
+	printf("Elemento nao encontrado\n");//caso elemento não seja encontrado sai do loop e printa
+	return -1;//retorno de erro
+}
+
+int main(){
+	int v[8] = {1,4,6,10,12,20,27,50};//vetor
+	printf("%d\n",busca_binaria(v,8,4));//print com a função e os parametros vetor,numero de elementos,elemento desejado
+}
+
+
 
