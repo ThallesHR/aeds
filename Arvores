@@ -111,4 +111,94 @@ int main(){
 }
 
 
+---------------------------------------------------------------------------------------------------------
+arvore heap 
+
+min heap = mais proximo da raiz os nos tem valores menores
+max heap = mais proximo da raiz os nos tem valores maiores
+
+#include<stdio.h>
+#define MAX_SIZE 5
+
+int pai(int index){// variavel pai
+	return (index-1)/2;//calculo da variavel pai para swap
+}
+
+int filho_esquerdo(int index){//variavel filho
+	return 2* index +1;//calculo da variavel filho para swap
+}
+int filho_direito(int index){//variavel filho
+	return 2* index+2;//calculo da variavel filho para swap
+}
+
+void swap(int * x,int * y){//swap
+	int temp  =* x;//variavel temporaria recebendo x
+	* x = * y;// x recebe y
+	* y = temp;// y recebe x
+}
+void insert(int vet[],int data,int *n){// insercao com os parametros, vetor, numero a ser inserido,cauda do vetor/arvore
+	if(*n >=MAX_SIZE){//se cauda for maior que o limite permitido
+		printf("Limite excedido!!");//limite excedido!!
+			return -1;
+	}
+	vet[*n] = data;//vetor na posiçao da cauda recebe o numero
+	* n = *n+1;// cauda cria mais uma posição antes do fim
+	
+	int i = *n-1;//começa da posição nova
+	while(i!= 0 && vet[pai(i)]<vet[i]){//enquanto a posição for diferente de 0 e diferente da raiz e nmaior que a raiz
+		swap(&vet[pai(i)],&vet[i]);//faz o swap
+		i = pai(i);//posição recebe pai na posiçao atual
+	}
+}
+
+void max_heapify(int vet[],int index, int n){//função para ver estrututra do heap com parametroos de vetor,index e numero
+	int esq = filho_esquerdo(index);//filho a esquerda do no atual
+	int dir = filho_direito(index);//filho a direita do no atual
+	
+	int largest = index;//maior valor recebe valor atual
+	
+	if(esq<= n && vet[esq] > vet[largest]){//se esq existir verifica se ele e maior que o maior valor
+		largest = esq;//maior recebe esq
+		
+	}
+	if(dir <= n &&vet[dir] > vet[largest]){//se esq existir verifica se ele e maior que o maior valor
+		largest = dir;//maior recebe dir
+	}
+	if( largest != index){//se o maior for diferente do atual
+		int temp = vet[index];// variavel temporaria recebe o vetor na posicao atual
+		vet[index] = vet[largest]; // vetor na posiçao atual recebe vetor na posicao maior
+		max_heapify(vet,largest,n);//chama a função para atualizar a arvore
+	}
+}
+
+int extract_max(int vet[],int*n){//funçao de extração recebendo o vetor e a cauda
+	int max_item =vet[0];//max item ou item que vai ser removido
+	vet[0] = vet[*n -1];// remove ele e diminui o vetor
+	*n = *n-1;// cauda diminui
+	
+	max_heapify(vet,0,*n);//chama a função para atualizar a arvore
+	return max_item;//retorna item removido
+}
+
+void print(int vet[],int n){//printa a arvore
+	int i;
+	for(i = 0; i< n; i++){
+		printf("Posicao %d: %d\n",i,vet[i]);//printa a inserção
+	}
+}
+int main(){
+	int n = 0;// cauda a 0
+	int vet[MAX_SIZE];//vetor definido com o max size
+	
+	insert(vet,2,&n);//inserir
+	insert(vet,3,&n);
+	insert(vet,5,&n);
+	insert(vet,1,&n);
+	insert(vet,15,&n);
+	
+	print(vet,n);//printa o vetor inserido
+	extract_max(vet,&n);
+	print(vet,n);
+}
+
 
