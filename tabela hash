@@ -1,4 +1,4 @@
-TABELA HASH E SOURCES
+TABELA HASH 
 
 1- TABELA HASH:
 Tabela hash influencia muito na busca, facilitando a velocidade para a busca de informações dentro dela
@@ -20,6 +20,8 @@ Gerar uma distribuição equilibrada de dados dentro da tabela.
 - essa função seria utilizado para achar a posição ideal de inserção do valor ou seja o resto da divisão sera a posição ideal
 ///
 int Chavedivisao (int chave, int TABLE_SIZE){
+if( chave < 0)
+chave *= -1;
 return chave%TABLE_SIZE;
 }
 ///
@@ -31,6 +33,8 @@ return chave%TABLE_SIZE;
 !!!NUNCA VAI DAR EXATO NAS CONTAS O PC ARREDONDA.
 ///
 Int Multiplicacao(int chave, int TABLE_SIZE){
+if( chave < 0)
+chave *= -1;
 double VAL = 0,18218988;
 double insere = VAL*chave;
 insere = insere- (int) insere;
@@ -42,6 +46,44 @@ return (int) (insere *TABLE_SIZE);
 -Somente pode fazer isso enquanto o número for maior que o tamanho da tabela
 - soma -se do primeiro para o ultimo, o segundo com o penultimo, somente não soma o do meio
 - e com isso entende - se que o dado acompanhado da chave que dobrou é a posição que ele vai ficar
+///
+int chavedobra(int chave,int MAX_SIZE){
+if( chave < 0)
+chave *= -1;
+if(chave<MAX_SIZE)
+return chave;
+
+int numeros[10];
+int inicio = 0;
+int fim = 0;
+int div = chave;
+do{
+int resto = div % 10;
+numero[inicio] = resto;
+if(numeros[inicio])
+fim = inicio;
+inicio++;
+div = div/10;
+}while(inicio<10)
+inicio = 0;
+
+while(chave>MAX_SIZE){
+while(fim > inicio){
+numeros[inicio] = numeros[inicio] + numeros[fim] % 10;
+numeros[fim] = 0;
+inicio++;
+fim --;
+}
+inicio = 0;
+chave = 0;
+int fator = 1;
+while(inicio<= fim){
+chave += numeros[inicio] * fator;
+fator*= 10;
+inicio++;
+}
+return chave;
+}
 
 HASHING UNIVERSAL -
 Com os metódos hashing existe um problema nas inserções, que é a probabilidade de duplicar,ou seja vc ter 2 registros diferentes mas na mesma posição
@@ -60,10 +102,17 @@ TRATAMENTO DAS COLISÕES -
 -Encadeamento separado:
 -Dentro de cada posição existe uma lista encadeada quando houver colisão o elemento é inserido na lista
 -Sondagem linear: caso a posição onde o elemento será inserido esteja ocupada ele salta de 1 em 1 até uma posição livre
+///
+int sondagem_linear(int pos,int MAX_SIZE,int i){
+return((pos+1)% MAX_SIZE);
 -Sondagem quadratica : caso a posição onde o elemento será inserido esteja ocupada ele salta o valor da posição em que ele esta ao quadrado até uma posição livre
+int sondagem_quadratica(int pos,int MAX_SIZE,int i){
+pos = pos+2*i+5*i*i;
+return(pos %MAX_SIZE);
 
 DUPLO HASH
 - H1 + i* H2
+-Assume -se que vc utilizou outra função em H1 que colidiu pra passar para H2
 -Onde usa o H1 para calcular a posição inicial do elemento
 -Caso haja colisão H2 é chamado para calcular o descolamento em função de H1
 ///
@@ -71,3 +120,40 @@ int duplo hash(int H1, int chave,int i, int MAX_SIZE){
 int H2 =chave_divisao( chave,  MAX_SIZE -1)+1;
 return((H1+i*H2)% MAX_SIZE);
 }
+
+BUSCA NA HASH
+char* busca_hash(hash*ha,int dado){
+int i,pos;
+pos = chave_dobra(matricula, ha->MAX_SIZE);
+
+for(i =0; i <ha->TABLE_SIZE i++){
+pos = duplo hash(pos,dado,i,ha->MAX_SIZE);
+if(ha->campo[pos] == NULL){
+return NULL;
+}
+else if(ha->estudantes[pos]->matricula == matricula){
+return &(ha->estudantes[pos]->nome[0]);
+ }
+}
+return NULL;
+}
+
+INSERCAO POR ENDERECAMENTO ABERTO
+int insere_hash_aberto(hash* ha,campo * c){
+if(ha == NULL || ha->qtd == ha-<MAX_SIZE){
+return 0;
+}
+int pos, i;
+pos = chave_dobra(c->dado,ha->TABLE_SIZE);
+
+for (i = 0 ; i< ha->TABLE_SIZE; i++){
+pos = duplo_hash(pos, c->dado,i,ha->TABLE_SIZE);
+if(ha->dado[pos] == NULL;){
+ha->dado[pos] = c;
+ha ->qtd++;
+return 1;
+ }
+}
+return 0
+}
+
