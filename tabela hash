@@ -1,0 +1,73 @@
+TABELA HASH E SOURCES
+
+1- TABELA HASH:
+Tabela hash influencia muito na busca, facilitando a velocidade para a busca de informações dentro dela
+onde vc salva as informações como CHAVE(CH) E VALOR(VAL) desejado e assim ele salva e acessa as informações,
+ a CH seria a identificação do VAL e assim ele salva o CH na posição desejada e dentro desse CH esta o VAL desejado
+para uma busca seria essencial ter o CH pois ela só é feita por CH.
+!!Para uma busca ordenada no hash terá o custo de ordenação pois as tabelas hash não são ordenadas.
+
+FUNÇÕES DE HASHING -
+as funções de hashing  devem possuir as seguintes propiedades:
+Simples e barata computacionalmente de se calcular.
+Garantir que valores diferentes produzam posições diferentes.
+Gerar uma distribuição equilibrada de dados dentro da tabela.
+!! a implementação do hashing se dá tendo conhecimento prévio da natureza dos dados a serem inseridos.
+
+1-METODO DIVISAO
+- Consiste em calcular o resto da divisão entre o valor,que representa o elemento a ser inserido e tamanho do array
+- esse calculo garante que o resto sempre vai dar um valor entre 0 e tamanho do array 
+- essa função seria utilizado para achar a posição ideal de inserção do valor ou seja o resto da divisão sera a posição ideal
+///
+int Chavedivisao (int chave, int TABLE_SIZE){
+return chave%TABLE_SIZE;
+}
+///
+
+2-METODO MULTIPLICAÇÃO
+- Usa constante 0<A<1; (ou seja somente numeros com 0,alguma coisa)
+- A constante multiplicada pelo valor que representa o elemento e em seguida a parte fracionaria é multiplicada pelo tamanho da tabela, resultando na posição do elemento
+- Ou seja é o VAL * CHAVE, o resto da multiplicação de VAL * pelo TABLE_SIZE
+!!!NUNCA VAI DAR EXATO NAS CONTAS O PC ARREDONDA.
+///
+Int Multiplicacao(int chave, int TABLE_SIZE){
+double VAL = 0,18218988;
+double insere = VAL*chave;
+insere = insere- (int) insere;
+return (int) (insere *TABLE_SIZE);
+///
+
+3-METODO DA DOBRA
+-Consiste em um metódo onde vc vai dobrando os resultantes desprezando as dezenas para calcular a posição
+-Somente pode fazer isso enquanto o número for maior que o tamanho da tabela
+- soma -se do primeiro para o ultimo, o segundo com o penultimo, somente não soma o do meio
+- e com isso entende - se que o dado acompanhado da chave que dobrou é a posição que ele vai ficar
+
+HASHING UNIVERSAL -
+Com os metódos hashing existe um problema nas inserções, que é a probabilidade de duplicar,ou seja vc ter 2 registros diferentes mas na mesma posição
+para que seja possivel a solução desse problema existe a hashing universal.
+-A proposta dela consiste em um meio de que miniza a colisão de dados.
+-A proposta montada por Wegman e Carter consiste em:
+--Escolha um numero primo (p) que seja maior que a chave(CH) que sera inserido na hash, assim 0<=CH<p
+-- O número é maior que a tabela
+--Escolha duas constantes inteiras que favorecam o seguinte requisito ( 0<a<p; 0<=b<p)
+- E assim temos um hash universal que corrigindo ficaria : h(k)_{a,b} = ((ak+b)% p)% m)
+!-h é a hash, k a chave,a  e b as constantes, p o numero, e m o tamanho da tabela
+
+TRATAMENTO DAS COLISÕES -
+-Endereçamento aberto ou rehash:
+- No caso de haver colisão ele percorre a tabela novamente procurando uma posição vazia
+-Encadeamento separado:
+-Dentro de cada posição existe uma lista encadeada quando houver colisão o elemento é inserido na lista
+-Sondagem linear: caso a posição onde o elemento será inserido esteja ocupada ele salta de 1 em 1 até uma posição livre
+-Sondagem quadratica : caso a posição onde o elemento será inserido esteja ocupada ele salta o valor da posição em que ele esta ao quadrado até uma posição livre
+
+DUPLO HASH
+- H1 + i* H2
+-Onde usa o H1 para calcular a posição inicial do elemento
+-Caso haja colisão H2 é chamado para calcular o descolamento em função de H1
+///
+int duplo hash(int H1, int chave,int i, int MAX_SIZE){
+int H2 =chave_divisao( chave,  MAX_SIZE -1)+1;
+return((H1+i*H2)% MAX_SIZE);
+}
