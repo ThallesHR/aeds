@@ -1,0 +1,57 @@
+BUBBLE SORT
+Um dos mais antigos e conhecidos metodos de ordenação é o bubble sort, onde consiste em Percorrer
+toda lista e comparar pares de elementos assim ordenando eles por comparação.
+com isso se nota a criação de uma função responsável por trocar elementos
+e a utilização de dois loops, 1 é responsavel por verificar onde a ordenação está dentro do array e o outro é responsavel por
+fazer as comparações dentro do array, assim realizando a troca caso necessário e para finalizar uma função responsavel por printar o array.
+
+///
+#include<stdio.h>
+#include <stdbool.h>
+
+void swap(int* xp, int* yp){
+    int temp = *xp;
+    *xp = *yp;
+    *yp = temp;
+}
+
+void bubbleSort(int arr[], int n){
+    int i, j;
+    bool swapped;
+    for (i = 0; i < n - 1; i++) {
+        swapped = false;
+        for (j = 0; j < n - i - 1; j++) {
+            if (arr[j] > arr[j + 1]) {
+                swap(&arr[j], &arr[j + 1]);
+                swapped = true;
+            }
+        }
+
+        // Se não houve a troca de elementos
+        if (!swapped)
+            break;
+    }
+}
+
+void printArray(int arr[], int n){
+    int i;
+    for(i = 0; i < n; i++){
+        printf("%4d ", arr[i]);
+    }
+    printf("\n");
+}
+
+int main(){
+    int arr[] = { 66, 30, 27, 13, 25, 10 };
+    int n = sizeof(arr) / sizeof(arr[0]);
+    
+    printf("Original array (size %d): \n", n);
+    printArray(arr, n);
+
+    bubbleSort(arr, n);
+
+    printf("Sorted array: \n");
+    printArray(arr, n);
+    return 0;
+}
+///
