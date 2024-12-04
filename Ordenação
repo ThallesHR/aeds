@@ -55,3 +55,83 @@ int main(){
     return 0;
 }
 ///
+
+MERGE SORT 
+Consiste em um meio de ordenação onde ele pega 1vetor separa eles e vai subdvidindo a lista para ordenar
+assim ordenando internamente e depois juntando toda a lista para ordenar 1 a 1 
+nota se que nesse código utilizamos a função merge para unir dois pedaços de array assim tendo 2 minivetores unidos
+e na função mergesort utilizamos dela para separar e fazer as ordenações necessárias.
+///
+#include<stdio.h>
+#include<stdbool.h>
+
+void merge(int arr[],int l, int m, int r){
+	int dimL = m-l+1;
+	int dimR = r - m;
+	int L[dimR],R[dimR];
+	
+	int i,j,k;
+	for(i = 0; i<dimL; i++){
+		L[i] = arr[l+i];
+		
+	}
+	for(j = 0; j <dimR; j++){
+		R[j] = arr[m+1+j];
+	}
+	i = 0; j = 0, k = l;
+	while(i< dimL && j <dimR){
+		if(L[i] <= R[j]){
+			arr[k] = L[i];
+			i++;
+		}
+		else{
+			arr[k] = R[j];
+			j++;
+		}
+		k++;
+	}
+	while(i<dimL){
+		arr[k] =L[i];
+		i++;
+		k++;
+	}
+	while(j<dimR){
+		arr[k] = R[j];
+		j++;
+		k++;
+	}
+}
+
+void Mergesort(int arr[], int l,int r){
+	if(l<r){
+		int m = l+(r-l)/2;
+		
+		Mergesort(arr,l,m);
+		Mergesort(arr,m+1,r);
+		merge(arr,l,m,r);
+		}
+	}
+	
+void printa(int arr[], int n){
+	int i;
+	for(i = 0;i<n;i++){
+		printf("%4d",arr[i]);
+	}
+	printf("\n");
+}
+
+
+int main(){
+	int arr[] = {10,22,89,76,1,44};
+	int n = sizeof(arr)/sizeof(arr[0]);
+	
+	printf("Array original(size%d):\n",n);
+	printa(arr,n);
+	
+	Mergesort(arr,0,n-1);
+	
+	printf("Novo array: \n");
+	printa(arr,n);
+	return 0;
+}
+///
