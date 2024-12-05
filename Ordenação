@@ -135,3 +135,74 @@ int main(){
 	return 0;
 }
 ///
+
+HEAPSORT
+Segue abaixo o código de heapsort que se carateriza por ser uma ordenação que primeiramente transforma-se em uma arvore 
+heap atendendo os requisitos dela(nó pai maior ou igual filhos) é criada uma função (heapify) para primeiramente transforma
+r-mos ela em uma arvore binaria assim conseguindo utilizar o metodo heap logo em seguida utilizamos a heapsort para puxar
+o metodo que consiste em começar do ultimo no pai e percorrer de tras pra frente
+com isso ele remove o maior elemento do heap e ordena no array do maior pro menor fazendo a ordenação e comparando todos
+
+
+///
+#include <stdio.h>
+
+void heapify(int arr[], int n,int i){
+	int maior = i;
+	
+int esq = 2*i+1;
+int dir = 2*i+2;
+
+if(esq<n && arr[esq]>arr[maior]){
+	maior = esq;
+}
+
+if(dir<n && arr[dir]>arr[maior]){
+	maior = dir;
+}
+
+if(maior != i){
+	int temp = arr[i];
+	arr[i] = arr[maior];
+	arr[maior] = temp;
+	
+	heapify(arr,n,maior);
+	}
+}
+
+
+void heapsort(int arr[],int n){
+	for(int i = n/2 - 1; i>= 0; i--){
+		heapify(arr,n,i);
+	}
+	
+		for(int i = n-1; i>= 0; i--){
+		int temp =  arr[0];
+		arr[0] = arr[i];
+		arr[i] = temp;
+		heapify(arr,i,0);
+	}
+	
+}
+
+void printa(int arr[], int n){
+	int i;
+	for (i = 0; i < n; i++){
+		printf("%4d",arr[i]);
+	}
+}
+
+int main(){
+	int arr [] = {9,1,14,28,67,55,7};
+	int n = sizeof(arr)/sizeof(arr[0]);
+	
+	printf("Original array (size %d):",n);
+	printa(arr,n);
+	
+	heapsort(arr,n);
+	
+	printf("Novo array");
+	printa(arr,n);
+	return 0;
+}
+///
